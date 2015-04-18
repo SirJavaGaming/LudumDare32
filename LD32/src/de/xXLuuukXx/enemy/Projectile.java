@@ -21,6 +21,10 @@ public class Projectile extends WorldObject {
 		super(x, y);
 		this.direction = direction;
 		this.speed = 10;
+		
+		x+= 40;
+		y+= 50;
+		
 		position = new Vector2(x, y);
 		
 		ResourceManager.playSoundEffect("schuss.wav");

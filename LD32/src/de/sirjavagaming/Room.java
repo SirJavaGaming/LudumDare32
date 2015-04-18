@@ -40,7 +40,7 @@ public class Room {
 	public void create() {		
 		worldObjects = new ArrayList<WorldObject>();
 		addWorldObject(new DemoCollider(100, 100));
-		addWorldObject(new Tower(100,100));
+		addWorldObject(new Tower(100 ,100));
 		projectiles = new ArrayList<Projectile>();
 	}
 	
