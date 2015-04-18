@@ -39,7 +39,8 @@ public class Room {
 	
 	public void render() {
 		SpriteBatch graphics = Game.getInstance().getGraphics();
-		graphics.draw(new TextureRegion(ResourceManager.getTexture("room/defaultroom.png"), 1280, 720),0, 0); 
+		graphics.draw(new TextureRegion(ResourceManager.getTexture("room/defaultroom.png"), 1280, 720),0, 0);
+		graphics.draw(ResourceManager.getTexture("Tower.png"), 500, 500, 70, 70);
 
 		if(TOP_DOOR) graphics.draw(ResourceManager.getTexture("room/testdoor.png"), 512, 464, 256, 256);
 		if(LEFT_DOOR) graphics.draw(ResourceManager.getTexture("room/testdoor_rot.png"), 0, 232, 256, 256);
