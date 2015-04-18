@@ -1,7 +1,10 @@
 package de.sirjavagaming;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
+
+import org.lwjgl.input.Keyboard;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -12,13 +15,19 @@ import de.sirjavagaming.worldobjects.DemoCollider;
 import de.sirjavagaming.worldobjects.WorldObject;
 import de.team.Game;
 import de.xXLuuukXx.Player;
+import de.xXLuuukXx.enemy.Enemy;
+import de.xXLuuukXx.enemy.Projectile;
+import de.xXLuuukXx.enemy.Tower;
 
 public class Room {
 	private World world;
 	private int x;
 	private int y;
 	private double difficulty;
-	private ArrayList<WorldObject> worldObjects;
+	private List<WorldObject> worldObjects;
+	private List<Projectile> projectiles;
+	
+	private boolean doorsOpen = false;
 	
 	public Room(World world, int x, int y) {
 		this.x = x;
@@ -28,29 +37,67 @@ public class Room {
 		calcDoors();
 	}
 	
-	public void create() {
+	public void create() {		
 		worldObjects = new ArrayList<WorldObject>();
-		worldObjects.add(new DemoCollider(100, 100));
+		addWorldObject(new DemoCollider(100, 100));
+		addWorldObject(new Tower(100,100));
+		projectiles = new ArrayList<Projectile>();
 	}
 	
+	boolean b = false;
 	public void update() {
-		
+		if(Keyboard.isKeyDown(Keyboard.KEY_I)) {
+			if(!b)
+			doorsOpen=!doorsOpen;
+			b = true;
+		} else {
+			b = false;
+		}
 	}
 	
 	public void render() {
 		SpriteBatch graphics = Game.getInstance().getGraphics();
-		graphics.draw(new TextureRegion(ResourceManager.getTexture("room/defaultroom.png"), 1280, 720),0, 0);
-		graphics.draw(ResourceManager.getTexture("Tower.png"), 500, 500, 70, 70);
-
-		if(TOP_DOOR) graphics.draw(ResourceManager.getTexture("room/testdoor.png"), 512, 464, 256, 256);
-		if(LEFT_DOOR) graphics.draw(ResourceManager.getTexture("room/testdoor_rot.png"), 0, 232, 256, 256);
-		if(BOTTOM_DOOR) graphics.draw(ResourceManager.getTexture("room/testdoor.png"), 512, 256, 256, -256);
-		if(RIGHT_DOOR) graphics.draw(ResourceManager.getTexture("room/testdoor_rot.png"), 1280, 232, -256, 256);
+		graphics.draw(new TextureRegion(ResourceManager.getTexture("room/defaultroom.png"), Game.WIDTH, Game.HEIGHT),0, 0);
+		
+		String s = doorsOpen ? "door_open" : "door_closed";
+		
+		if(TOP_DOOR) graphics.draw(ResourceManager.getTexture("room/" + s + ".png"), 512, 464, 256, 256);
+		if(LEFT_DOOR) graphics.draw(ResourceManager.getTexture("room/" + s + "_rot.png"), 0, 232, 256, 256);
+		if(BOTTOM_DOOR) graphics.draw(ResourceManager.getTexture("room/" + s + ".png"), 512, 256, 256, -256);
+		if(RIGHT_DOOR) graphics.draw(ResourceManager.getTexture("room/" + s + "_rot.png"), 1280, 232, -256, 256);
 		
 		for(WorldObject object : worldObjects) {
 			object.update();
 			object.render(graphics);
 		}
+		Player player = Game.getInstance().getPlayer();
+		List<Projectile> remove = new ArrayList<Projectile>();
+		for(Projectile p : projectiles) {
+			if(p.hit(player.getCollisionBox())) {
+				player.damage(1);
+				remove.add(p);
+			}
+			for(WorldObject w : worldObjects) {
+				if(worldObjects instanceof CollidableWorldObject) {
+					if(p.hit(((CollidableWorldObject)w).getCollisionBox())) {
+						if(w instanceof Enemy) {
+							((Enemy)w).damage(1);
+							remove.add(p);
+						}
+					}
+				}
+			}
+
+			p.update();
+			p.render(graphics);
+		}
+		projectiles.removeAll(remove);
+		
+	}
+	
+	public void addWorldObject(WorldObject obj) {
+		worldObjects.add(obj);
+		obj.create();
 	}
 	
 	public int getMaxMovement(Player p, Direction d) {
@@ -223,4 +270,9 @@ public class Room {
 	private boolean RIGHT_DOOR;
 	private boolean BOTTOM_DOOR;
 	private boolean LEFT_DOOR;
+
+	public void addProjectile(Projectile projectile) {
+		projectiles.add(projectile);
+		
+	}
 }

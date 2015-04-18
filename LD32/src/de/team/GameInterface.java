@@ -52,7 +52,6 @@ public class GameInterface implements ApplicationListener {
 		graphics.enableBlending();
 		switch (gameState) {
 		case PLAYING:
-			
 			world.update();
 			world.render();
 			bar.render();
@@ -78,6 +77,14 @@ public class GameInterface implements ApplicationListener {
 	
 	public void setWorld(World world) {
 		this.world = world;
+	}
+	
+	public Player getPlayer() {
+		return player;
+	}
+	
+	public void setPlayer(Player player) {
+		this.player = player;
 	}
 	
 	public GameState getGameState() {

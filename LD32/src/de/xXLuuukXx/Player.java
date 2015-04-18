@@ -62,7 +62,7 @@ public class Player {
 		}
 
 	}
-
+	
 	public int getMovementspeed() {
 		return movementspeed;
 	}
@@ -100,6 +100,6 @@ public class Player {
 	}
 	
 	public void damage(int lifes) {
-		lifes -= lifes;
+		this.lifes -= lifes;
 	}
 }
