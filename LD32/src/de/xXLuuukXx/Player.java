@@ -16,7 +16,7 @@ public class Player {
 	private Rectangle collisionBox;
 	private int x;
 	private int y;
-	private static final int movementspeed = 8;
+	private int movementspeed = 8;
 	
 	public void create() {
 		
@@ -60,7 +60,7 @@ public class Player {
 		
 	}
 	
-	public static int getMovementspeed() {
+	public int getMovementspeed() {
 		return movementspeed;
 	}
 	
@@ -68,6 +68,25 @@ public class Player {
 		return collisionBox;
 	}
 	
+	public int getX() {
+		return x;
+	}
+	
+	public int getY() {
+		return y;
+	}
+	
+	public void setX(int x) {
+		this.x = x;
+	}
+	
+	public void setY(int y) {
+		this.y = y;
+	}
+	
+	public void setMovementspeed(int movementspeed) {
+		this.movementspeed = movementspeed;
+	}
 	
 	
 	
