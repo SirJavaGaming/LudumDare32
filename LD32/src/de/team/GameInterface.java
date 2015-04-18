@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import de.sirjavagaming.World;
 import de.xXLuuukXx.Player;
+import de.xXLuuukXx.enemy.Tower;
 
 public class GameInterface implements ApplicationListener {
 	
@@ -19,6 +20,7 @@ public class GameInterface implements ApplicationListener {
 	private World world;
 	
 	private Player player;
+	
 	
 	@Override
 	public void create() {
@@ -33,8 +35,10 @@ public class GameInterface implements ApplicationListener {
 		
 		this.world = new World();
 		world.create();
+		
 		this.player = new Player();
 		player.create();
+		
 		
 	}
 	
@@ -45,6 +49,8 @@ public class GameInterface implements ApplicationListener {
 		graphics.enableBlending();
 		switch (gameState) {
 		case PLAYING:
+			
+			
 			world.update();
 			world.render();
 			player.update();

@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.Rectangle;
 import de.sirjavagaming.ResourceManager;
 import de.team.Game;
 import de.team.GameInterface;
+import de.xXLuuukXx.enemy.Tower;
 
 
 public class Player {
@@ -32,6 +33,8 @@ public class Player {
 		
 	SpriteBatch graphics = instance.getGraphics();	
 	graphics.draw(ResourceManager.getTexture("icon.png"), x, y, 80, 100);	
+	
+	
 	
 	}
 	
