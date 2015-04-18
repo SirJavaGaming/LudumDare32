@@ -5,10 +5,12 @@ import java.util.Random;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Rectangle;
 
 import de.sirjavagaming.worldobjects.DemoCollider;
 import de.sirjavagaming.worldobjects.WorldObject;
 import de.team.Game;
+import de.xXLuuukXx.Player;
 
 public class Room {
 	private World world;
@@ -49,6 +51,11 @@ public class Room {
 		}
 	}
 	
+	public int getMaxMovement(Player p, Direction d) {
+		Rectangle absPRect = new Rectangle();
+		
+		return 0;
+	}
 	
 	private void calcDifficulty() {
 		double distanceToCenter = Math.sqrt(Math.pow(Math.abs(x-15),2) + Math.pow(Math.abs(y-15),2));
