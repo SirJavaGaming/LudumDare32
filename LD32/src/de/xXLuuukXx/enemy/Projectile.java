@@ -16,11 +16,15 @@ public class Projectile extends WorldObject {
 	
 	private int size = 32;
 	
+	
 	public Projectile(double direction, int x, int y) {
 		super(x, y);
 		this.direction = direction;
 		this.speed = 10;
 		position = new Vector2(x, y);
+		
+		ResourceManager.playSoundEffect("schuss.wav");
+		
 	}
 
 	@Override
