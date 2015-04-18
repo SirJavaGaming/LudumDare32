@@ -76,7 +76,5 @@ public abstract class Tower extends Enemy {
 		
 
 	}
-	
-	
 
 }

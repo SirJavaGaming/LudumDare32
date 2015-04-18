@@ -17,10 +17,12 @@ public class Player {
 	private int x;
 	private int y;
 	private int movementspeed = 8;
+	private int lifes;
 
 	public void create() {
 		this.collisionBox = new Rectangle(0, 0, 80, 100);
 		this.instance = Game.getInstance();
+		this.lifes = 10;
 		x = 500;
 		y = 500;
 
@@ -88,5 +90,16 @@ public class Player {
 	public void setMovementspeed(int movementspeed) {
 		this.movementspeed = movementspeed;
 	}
-
+	
+	public int getLifes() {
+		return lifes;
+	}
+	
+	public void setLifes(int lifes) {
+		this.lifes = lifes;
+	}
+	
+	public void damage(int lifes) {
+		lifes -= lifes;
+	}
 }

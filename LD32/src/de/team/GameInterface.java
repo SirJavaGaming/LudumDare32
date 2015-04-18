@@ -7,6 +7,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
+import de.sirjavagaming.Bar;
 import de.sirjavagaming.World;
 import de.xXLuuukXx.Player;
 
@@ -20,6 +21,7 @@ public class GameInterface implements ApplicationListener {
 	
 	private Player player;
 	
+	private Bar bar;
 	
 	@Override
 	public void create() {
@@ -38,6 +40,8 @@ public class GameInterface implements ApplicationListener {
 		this.player = new Player();
 		player.create();
 		
+		this.bar = new Bar();
+		
 		
 	}
 	
@@ -49,15 +53,16 @@ public class GameInterface implements ApplicationListener {
 		switch (gameState) {
 		case PLAYING:
 			
-			
 			world.update();
 			world.render();
+			bar.render();
 			player.update();
 			player.render();
 			break;
 		case ROOM_SWITCH:
 			world.update();
 			world.render();
+			bar.render();
 			break;
 		}
 		graphics.end();
