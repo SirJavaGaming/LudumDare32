@@ -1,14 +1,26 @@
 package de.team;
 
 import com.badlogic.gdx.ApplicationListener;
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class GameInterface implements ApplicationListener {
 	
 	private GameState gameState;
 	
+	private SpriteBatch graphics;
+	
 	@Override
 	public void create() {
 		setGameState(GameState.PLAYING);
+		
+		
+		OrthographicCamera cam = new OrthographicCamera(Game.WIDTH, Game.HEIGHT);
+		cam.setToOrtho(false, Game.WIDTH, Game.HEIGHT);
+		
+		graphics = new SpriteBatch();
+		graphics.setProjectionMatrix(cam.combined);
+		
 	}
 	
 	@Override
