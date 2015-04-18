@@ -47,6 +47,8 @@ public class GameInterface implements ApplicationListener {
 		case PLAYING:
 			world.update();
 			world.render();
+			player.update();
+			player.render();
 			break;
 		case ROOM_SWITCH:
 			world.update();
