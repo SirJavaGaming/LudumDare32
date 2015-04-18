@@ -11,11 +11,14 @@ public class World {
 	private GameInterface instance;
 	private Room[][] rooms;
 	
+	private Room currentRoom;
+	
 	public void create() {
 		this.rooms = new Room[31][31];
 		this.instance = Game.getInstance();
 		rooms[0][0] = new Room(this, 0, 0);
 		rooms[0][0].create();
+		currentRoom = rooms[0][0];
 	}
 	
 	public Room[][] getRooms() {
@@ -70,6 +73,9 @@ public class World {
 		if(instance.getGameState() == GameState.ROOM_SWITCH) {
 			updateAnim();
 		}
+	}
+	public Room getCurrentRoom() {
+		return currentRoom;
 	}
 	
 }

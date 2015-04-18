@@ -9,7 +9,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import de.sirjavagaming.World;
 import de.xXLuuukXx.Player;
-import de.xXLuuukXx.enemy.Tower;
 
 public class GameInterface implements ApplicationListener {
 	

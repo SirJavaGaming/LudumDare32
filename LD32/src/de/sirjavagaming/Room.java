@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 
+import de.sirjavagaming.worldobjects.CollidableWorldObject;
 import de.sirjavagaming.worldobjects.DemoCollider;
 import de.sirjavagaming.worldobjects.WorldObject;
 import de.team.Game;
@@ -38,7 +39,7 @@ public class Room {
 	
 	public void render() {
 		SpriteBatch graphics = Game.getInstance().getGraphics();
-		graphics.draw(new TextureRegion(ResourceManager.getTexture("room/testroom.png"), 1280, 720),0, 0); 
+		graphics.draw(new TextureRegion(ResourceManager.getTexture("room/defaultroom.png"), 1280, 720),0, 0); 
 
 		if(TOP_DOOR) graphics.draw(ResourceManager.getTexture("room/testdoor.png"), 512, 464, 256, 256);
 		if(LEFT_DOOR) graphics.draw(ResourceManager.getTexture("room/testdoor_rot.png"), 0, 232, 256, 256);
@@ -52,9 +53,106 @@ public class Room {
 	}
 	
 	public int getMaxMovement(Player p, Direction d) {
-		Rectangle absPRect = new Rectangle();
+//		Rectangle absolutePlayerBox = new Rectangle(p.getX() + p.getCollisionBox().getX(), p.getY() + p.getCollisionBox().getY(), p.getX() + p.getCollisionBox().getWidth(), p.getY() + p.getCollisionBox().getHeight());
+//		switch (d) {
+//		case DOWN:
+//			for(WorldObject o : worldObjects) {
+//				int maxMove = p.getMovementspeed();
+//				if(o instanceof CollidableWorldObject) {
+//					CollidableWorldObject obj = (CollidableWorldObject)o;
+//					int x = (int) (p.getY() - (obj.getCollisionBox().getY() + obj.getCollisionBox().getHeight()));
+//					if(x > 0 && x < p.getMovementspeed()) {
+//						if(x < maxMove) {
+//							maxMove = x;
+//						}
+//					}
+//				}
+//				return maxMove;
+//			}
+//			break;
+//			p.getCollisionBox().
+//		case UP:
+//			for(WorldObject o : worldObjects) {
+//				int maxMove = p.getMovementspeed();
+//				if(o instanceof CollidableWorldObject) {
+//					CollidableWorldObject obj = (CollidableWorldObject)o;
+//					System.out.println(p.getX() + " " + p.getY() + " " + obj.getX() + " " + obj.getY());
+//					int x = (int) (obj.getCollisionBox().getY() - (p.getCollisionBox().getY() + p.getCollisionBox().getHeight()));
+//					if(x > 0 && x < p.getMovementspeed()) {
+//						if(x < maxMove) {
+//							maxMove = x;
+//						}
+//					}
+//				}
+//				return maxMove;
+//			}
+//			break;
+//		case RIGHT:
+//			for(WorldObject o : worldObjects) {
+//				int maxMove = p.getMovementspeed();
+//				if(o instanceof CollidableWorldObject) {
+//					CollidableWorldObject obj = (CollidableWorldObject)o;
+//					int x = (int) (obj.getCollisionBox().getX() - (p.getCollisionBox().getX() + p.getCollisionBox().getWidth()));
+//					if(x > 0 && x < p.getMovementspeed()) {
+//						if(x < maxMove) {
+//							maxMove = x;
+//						}
+//					}
+//				}
+//				return maxMove;
+//			}
+//			break;
+//		case LEFT:
+//			for(WorldObject o : worldObjects) {
+//				int maxMove = p.getMovementspeed();
+//				if(o instanceof CollidableWorldObject) {
+//					CollidableWorldObject obj = (CollidableWorldObject)o;
+//					int x = (int) (obj.getCollisionBox().getX() - (p.getCollisionBox().getX() + p.getCollisionBox().getWidth()));
+//					if(x > 0 && x < p.getMovementspeed()) {
+//						if(x < maxMove) {
+//							maxMove = x;
+//						}
+//					}
+//				}
+//				return maxMove;
+//			}
+//			break;
+//		default:
+//			break;
+//		}
 		
-		return 0;
+		int maxMovement = p.getMovementspeed();
+		for(WorldObject o : worldObjects) {
+			if(o instanceof CollidableWorldObject) {
+				CollidableWorldObject obj = (CollidableWorldObject)o;
+				for(int i = p.getMovementspeed(); i >= 0; i--) {
+					Rectangle newPlayerBox = p.getCollisionBox();
+					switch (d) {
+					case UP:
+						newPlayerBox.setY(newPlayerBox.getY() + i);
+						break;
+					case DOWN:
+						newPlayerBox.setY(newPlayerBox.getY() - i);
+						break;
+					case LEFT:
+						newPlayerBox.setX(newPlayerBox.getX() - i);
+						break;
+					case RIGHT:
+						newPlayerBox.setX(newPlayerBox.getX() + i);
+						break;
+						
+					}
+					if(obj.getCollisionBox().overlaps(newPlayerBox)) {
+						if(i == 0) return 0;
+						if(maxMovement > i) maxMovement = i;
+					} else {
+						break;
+					}
+				}
+			}
+		}
+		
+		return maxMovement-1;
 	}
 	
 	private void calcDifficulty() {

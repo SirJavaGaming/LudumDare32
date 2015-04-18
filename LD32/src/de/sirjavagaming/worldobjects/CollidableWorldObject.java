@@ -13,7 +13,7 @@ public abstract class CollidableWorldObject extends WorldObject {
 	
 	
 	public Rectangle getCollisionBox() {
-		return collisionBox;
+		return new Rectangle(x + collisionBox.getX(), y + collisionBox.getY(), collisionBox.getWidth() - collisionBox.getX(), collisionBox.getHeight() - collisionBox.getY());
 	}
 	
 	public void setCollisionBox(Rectangle collisionBox) {
