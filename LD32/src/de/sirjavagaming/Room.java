@@ -1,6 +1,7 @@
 package de.sirjavagaming;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
@@ -9,6 +10,7 @@ import org.lwjgl.input.Keyboard;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.utils.Array;
 
 import de.sirjavagaming.worldobjects.CollidableWorldObject;
 import de.sirjavagaming.worldobjects.DemoCollider;
@@ -26,6 +28,8 @@ public class Room {
 	private double difficulty;
 	private List<WorldObject> worldObjects;
 	private List<Projectile> projectiles;
+	private Array<Integer> zahlen = new Array<Integer>();
+	private boolean exists;
 	
 	private boolean doorsOpen = false;
 	
@@ -40,7 +44,78 @@ public class Room {
 	public void create() {		
 		worldObjects = new ArrayList<WorldObject>();
 		addWorldObject(new DemoCollider(100, 100));
-		addWorldObject(new Tower(100 ,100));
+		
+		Random rand = new Random();
+		int x = rand.nextInt(4)+1;
+		System.out.println("Türme: " + x);
+		
+		for(int z = 1; z<=x; z++) {
+		
+			exists = true;
+		 			
+			while(exists) {
+			
+				int towers = rand.nextInt(8)+1;
+				
+				if(zahlen.contains(towers, false)) {
+					
+				} else {
+				
+					if(towers == 1) {
+						addWorldObject(new Tower(200 ,180));
+						zahlen.add(1);
+					}
+				
+					if(towers == 2) {
+						addWorldObject(new Tower(450 ,180));
+						zahlen.add(2);
+					}
+		
+					if(towers == 3) {
+						addWorldObject(new Tower(700 ,180));
+						zahlen.add(3);
+					}
+		
+					if(towers == 4) {
+						addWorldObject(new Tower(950 ,180));
+						zahlen.add(4);
+					}
+			
+					if(towers == 5) {
+						addWorldObject(new Tower(200 ,460));
+						zahlen.add(5);
+					}
+		
+					if(towers == 6) {
+						addWorldObject(new Tower(450 ,460));
+						zahlen.add(6);
+					}
+				
+					if(towers == 7) {
+						addWorldObject(new Tower(700 ,460));
+						zahlen.add(7);
+					}
+		
+					if(towers == 8) {
+						addWorldObject(new Tower(950 ,460));
+						zahlen.add(8);
+					
+					}
+				
+				exists = false;
+				
+				System.out.println("Plätze: " + towers);
+				
+				}
+			}
+			
+			
+		
+		}
+		
+		System.out.println(zahlen);
+		zahlen.clear();
+		
 		projectiles = new ArrayList<Projectile>();
 	}
 	
