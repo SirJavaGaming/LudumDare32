@@ -56,7 +56,6 @@ public class World {
 		} else {
 			// -(x-500)²/250000
 			float alpha = (float) (Math.pow(-(mssincestart-500), 2) / 250000);
-			System.out.println(mssincestart + " " + alpha);
 			graphics.setColor(1, 1, 1, 1-alpha);
 			graphics.draw(ResourceManager.getTexture("black.png"), 0, 0, Game.WIDTH, Game.HEIGHT);
 			graphics.setColor(1, 1, 1, 1);
