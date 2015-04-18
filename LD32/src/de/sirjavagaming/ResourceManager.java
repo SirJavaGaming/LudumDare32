@@ -40,7 +40,7 @@ public class ResourceManager {
 
 	private static Sound loadSound(String file) {
 		if(sounds.containsKey(file)) return sounds.get(file);
-		Sound t = Gdx.audio.newSound(Gdx.files.internal("res/sound/" + file));
+		Sound t = Gdx.audio.newSound(Gdx.files.internal("res/audio/" + file));
 		sounds.put(file, t);
 		return t;
 	}
