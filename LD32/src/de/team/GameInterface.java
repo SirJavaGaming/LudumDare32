@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import de.sirjavagaming.World;
+import de.xXLuuukXx.Player;
 
 public class GameInterface implements ApplicationListener {
 	
@@ -16,6 +17,8 @@ public class GameInterface implements ApplicationListener {
 	private SpriteBatch graphics;
 	
 	private World world;
+	
+	private Player player;
 	
 	@Override
 	public void create() {
@@ -30,6 +33,9 @@ public class GameInterface implements ApplicationListener {
 		
 		this.world = new World();
 		world.create();
+		this.player = new Player();
+		player.create();
+		
 	}
 	
 	@Override
@@ -41,6 +47,8 @@ public class GameInterface implements ApplicationListener {
 		case PLAYING:
 			world.update();
 			world.render();
+			player.update();
+			player.render();
 			break;
 		case ROOM_SWITCH:
 			world.update();
