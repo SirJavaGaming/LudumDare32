@@ -6,7 +6,6 @@ import com.badlogic.gdx.math.Vector2;
 
 import de.sirjavagaming.ResourceManager;
 import de.sirjavagaming.worldobjects.WorldObject;
-import de.team.Game;
 
 public class Projectile extends WorldObject {
 
@@ -20,7 +19,7 @@ public class Projectile extends WorldObject {
 	public Projectile(double direction, int x, int y) {
 		super(x, y);
 		this.direction = direction;
-		this.speed = 5;
+		this.speed = 10;
 		position = new Vector2(x, y);
 	}
 
@@ -61,7 +60,6 @@ public class Projectile extends WorldObject {
 
 	public boolean hit(Rectangle r2) {
 		Rectangle r = new Rectangle(x - size/2, y - size/2, size, size);
-		System.out.println(x + " " + y + " " + r2.getX() + " " + r2.getY());
 		boolean b = r2.overlaps(r);
 		if(b) {
 			return true;
