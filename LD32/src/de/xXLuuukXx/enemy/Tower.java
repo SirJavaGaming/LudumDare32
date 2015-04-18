@@ -39,7 +39,7 @@ public abstract class Tower extends Enemy {
 
 	public void shot() {
 
-//		if (shot == false) { // !shot tuts auch^^
+//		if (shot == false) { 
 //
 //			shot = true;
 //
@@ -60,8 +60,8 @@ public abstract class Tower extends Enemy {
 //
 //			double X = Math.sin(pitch) * Math.cos(yaw);
 //			double Y = Math.sin(pitch) * Math.sin(yaw);
-//			double Z = Math.cos(pitch); // ich dachte wir machen nen 2D spiel,
-//										// wofür dann die z-kompnente?!
+//			double Z = Math.cos(pitch); 
+//										
 //
 //			float Vx = (float) X;
 //			float Vy = (float) Y;
@@ -69,12 +69,14 @@ public abstract class Tower extends Enemy {
 //
 //			Vector3 vector = new Vector3(Vx, Vy, Vz);
 //
-//			// hast du das kopiert oder selber geschrieben?
+//			
 //
 //		}
 		
 		
 
 	}
+	
+	
 
 }
