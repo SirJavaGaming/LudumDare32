@@ -7,12 +7,13 @@ public class Game {
 	
 	public static final int WIDTH = 1280;
 	public static final int HEIGHT = 720;
-	public static final String TITLE = "";
+	public static final String TITLE = "Name fehlt noch";
 	
 	private static GameInterface instance;
 	
 	public static void main(String[] args) {
-		if(args[0].equalsIgnoreCase("debug")) {
+		if(TITLE.equalsIgnoreCase("Name fehlt noch")) System.err.println("NAME FEHLT NOCH");
+		if(args.length > 0 && args[0].equalsIgnoreCase("debug")) {
 			System.setProperty("org.lwjgl.debug", "true");
 		}
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
@@ -24,5 +25,9 @@ public class Game {
 		config.foregroundFPS = 60;
 		instance = new GameInterface();
 		new LwjglApplication(instance, config);
+	}
+	
+	public static GameInterface getInstance() {
+		return instance;
 	}
 }
