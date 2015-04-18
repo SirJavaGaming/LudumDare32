@@ -1,10 +1,13 @@
 package de.sirjavagaming;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
+import de.sirjavagaming.worldobjects.DemoCollider;
+import de.sirjavagaming.worldobjects.WorldObject;
 import de.team.Game;
 
 public class Room {
@@ -12,6 +15,7 @@ public class Room {
 	private int x;
 	private int y;
 	private double difficulty;
+	private ArrayList<WorldObject> worldObjects;
 	
 	public Room(World world, int x, int y) {
 		this.x = x;
@@ -20,6 +24,12 @@ public class Room {
 		calcDifficulty();
 		calcDoors();
 	}
+	
+	public void create() {
+		worldObjects = new ArrayList<WorldObject>();
+		worldObjects.add(new DemoCollider(100, 100));
+	}
+	
 	public void update() {
 		
 	}
@@ -32,6 +42,11 @@ public class Room {
 		if(LEFT_DOOR) graphics.draw(ResourceManager.getTexture("room/testdoor_rot.png"), 0, 232, 256, 256);
 		if(BOTTOM_DOOR) graphics.draw(ResourceManager.getTexture("room/testdoor.png"), 512, 256, 256, -256);
 		if(RIGHT_DOOR) graphics.draw(ResourceManager.getTexture("room/testdoor_rot.png"), 1280, 232, -256, 256);
+		
+		for(WorldObject object : worldObjects) {
+			object.update();
+			object.render(graphics);
+		}
 	}
 	
 	

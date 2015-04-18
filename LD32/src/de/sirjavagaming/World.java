@@ -3,8 +3,6 @@ package de.sirjavagaming;
 import org.lwjgl.input.Keyboard;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.sun.org.apache.xml.internal.utils.NSInfo;
-
 import de.team.Game;
 import de.team.GameInterface;
 import de.team.GameState;
@@ -17,6 +15,7 @@ public class World {
 		this.rooms = new Room[31][31];
 		this.instance = Game.getInstance();
 		rooms[0][0] = new Room(this, 0, 0);
+		rooms[0][0].create();
 	}
 	
 	public Room[][] getRooms() {
