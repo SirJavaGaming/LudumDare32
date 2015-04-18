@@ -41,7 +41,7 @@ public abstract class Tower extends Enemy {
 	public void shot() {
 		
 		
-		if(shot == false) {
+		if(shot == false) {     // !shot tuts auch^^
 			
 			shot = true;
 			
@@ -54,7 +54,7 @@ public abstract class Tower extends Enemy {
 			
 			double dX = towerx - playerx;
 			double dY = towery - playery;
-			double dZ = 1 - 1;
+			double dZ = 1 - 1;	// 1 - 1 = 0 ?!
 		
 			double yaw = Math.atan2(dZ, dX);
 		
@@ -62,7 +62,7 @@ public abstract class Tower extends Enemy {
 		
 			double X = Math.sin(pitch) * Math.cos(yaw);
 			double Y = Math.sin(pitch) * Math.sin(yaw);
-			double Z = Math.cos(pitch);
+			double Z = Math.cos(pitch);    // ich dachte wir machen nen 2D spiel, wofür dann die z-kompnente?! 
 			
 			float Vx = (float) X;
 			float Vy = (float) Y;
@@ -70,7 +70,7 @@ public abstract class Tower extends Enemy {
 		 
 			Vector3 vector = new Vector3(Vx, Vy, Vz);
 			
-			
+			//hast du das kopiert oder selber geschrieben?
 		
 		}
 					
