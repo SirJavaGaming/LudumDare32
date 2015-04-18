@@ -69,6 +69,7 @@ public class Room {
 		return y;
 	}
 	
+	
 	private void calcDoors() {
 		Random rand = new Random();
 		if(y == 0) {
