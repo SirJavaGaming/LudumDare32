@@ -19,7 +19,7 @@ public class Player {
 	private int movementspeed = 8;
 
 	public void create() {
-		this.collisionBox = new Rectangle(0, 0, 100, 100);
+		this.collisionBox = new Rectangle(0, 0, 80, 100);
 		this.instance = Game.getInstance();
 		x = 500;
 		y = 500;
