@@ -9,6 +9,8 @@ import de.sirjavagaming.Direction;
 import de.sirjavagaming.ResourceManager;
 import de.team.Game;
 import de.team.GameInterface;
+import de.xXLuuukXx.enemy.Projectile;
+import de.xXLuuukXx.enemy.ProjectileOwner;
 
 public class Player {
 
@@ -20,9 +22,11 @@ public class Player {
 	private int lifes;
 	private Direction current;
 	private boolean moving = false;
+	private boolean sharpShooting = false;
+	private int fireDelay = 200;
 
 	public void create() {
-		this.collisionBox = new Rectangle(0, 0, 80, 100);
+		this.collisionBox = new Rectangle(0, 0, 100, 40);
 		this.instance = Game.getInstance();
 		this.lifes = 10;
 		current = Direction.DOWN;
@@ -83,7 +87,7 @@ public class Player {
 	}
 	
 	
-
+	private long lastShot = 0;
 	public void update() {
 		moving = false;
 		if (Keyboard.isKeyDown(Keyboard.KEY_W)) {
@@ -112,6 +116,22 @@ public class Player {
 					.getMaxMovement(this, Direction.RIGHT);
 			current = Direction.RIGHT;
 			moving = true;
+		}
+		
+		if(lastShot + fireDelay < System.currentTimeMillis() || sharpShooting) {
+			if(Keyboard.isKeyDown(Keyboard.KEY_DOWN)) {
+				instance.getWorld().getCurrentRoom().addProjectile(new Projectile(this, Math.toRadians(270), x+(int)collisionBox.getWidth()/2, y+(int)collisionBox.getHeight()/2));
+				lastShot = System.currentTimeMillis();
+			} else if(Keyboard.isKeyDown(Keyboard.KEY_UP)) {
+				instance.getWorld().getCurrentRoom().addProjectile(new Projectile(this, Math.toRadians(90), x+(int)collisionBox.getWidth()/2, y+(int)collisionBox.getHeight()/2));
+				lastShot = System.currentTimeMillis();
+			} else if(Keyboard.isKeyDown(Keyboard.KEY_LEFT)) {
+				instance.getWorld().getCurrentRoom().addProjectile(new Projectile(this, Math.toRadians(180), x+(int)collisionBox.getWidth()/2, y+(int)collisionBox.getHeight()/2));
+				lastShot = System.currentTimeMillis();
+			} else if(Keyboard.isKeyDown(Keyboard.KEY_RIGHT)) {
+				instance.getWorld().getCurrentRoom().addProjectile(new Projectile(this, Math.toRadians(0), x+(int)collisionBox.getWidth()/2, y+(int)collisionBox.getHeight()/2));
+				lastShot = System.currentTimeMillis();
+			}
 		}
 
 	}

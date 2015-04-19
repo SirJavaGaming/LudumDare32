@@ -1,7 +1,6 @@
 package de.sirjavagaming;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
@@ -19,6 +18,7 @@ import de.team.Game;
 import de.xXLuuukXx.Player;
 import de.xXLuuukXx.enemy.Enemy;
 import de.xXLuuukXx.enemy.Projectile;
+import de.xXLuuukXx.enemy.ProjectileOwner;
 import de.xXLuuukXx.enemy.Tower;
 
 public class Room {
@@ -140,29 +140,46 @@ public class Room {
 		if(LEFT_DOOR) graphics.draw(ResourceManager.getTexture("room/" + s + "_rot.png"), 0, 232, 256, 256);
 		if(BOTTOM_DOOR) graphics.draw(ResourceManager.getTexture("room/" + s + ".png"), 512, 256, 256, -256);
 		if(RIGHT_DOOR) graphics.draw(ResourceManager.getTexture("room/" + s + "_rot.png"), 1280, 232, -256, 256);
-		
+
+		List<WorldObject> removeo = new ArrayList<WorldObject>();
+		List<WorldObject> toAdd = new ArrayList<WorldObject>();
 		for(WorldObject object : worldObjects) {
+			if(object instanceof Enemy) {
+				Enemy e = ((Enemy)object);
+				if(e.getLifes() == 0) {
+					removeo.add(e);
+					toAdd.add(e.getReplacementForDead());
+				}
+			}
 			object.update();
 			object.render(graphics);
 		}
+		
+		for(WorldObject o : toAdd) {
+			addWorldObject(o);
+		}
+		worldObjects.removeAll(removeo);
+		
 		Player player = Game.getInstance().getPlayer();
 		List<Projectile> remove = new ArrayList<Projectile>();
 		for(Projectile p : projectiles) {
+			if(p.getOwner() != player) {
 			if(p.hit(player.getCollisionBox())) {
 				player.damage(1);
 				remove.add(p);
 			}
+			}
 			for(WorldObject w : worldObjects) {
-				if(worldObjects instanceof CollidableWorldObject) {
+				if(w == p.getOwner()) continue;
+				if(w instanceof CollidableWorldObject) {
 					if(p.hit(((CollidableWorldObject)w).getCollisionBox())) {
 						if(w instanceof Enemy) {
 							((Enemy)w).damage(1);
-							remove.add(p);
 						}
+						remove.add(p);
 					}
 				}
 			}
-
 			p.update();
 			p.render(graphics);
 		}

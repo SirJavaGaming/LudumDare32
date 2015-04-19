@@ -1,30 +1,31 @@
 package de.xXLuuukXx.enemy;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Rectangle;
 
 import de.sirjavagaming.ResourceManager;
 import de.sirjavagaming.worldobjects.WorldObject;
 import de.team.Game;
 import de.xXLuuukXx.Player;
 
-public class Tower extends WorldObject {
+public class Tower extends Enemy {
 
 	private int fireDelay;
 
 	public Tower(int x, int y) {
-		super(x, y);
+		super(new Rectangle(0, 0, 100, 100), x, y);
+		lifes = 10;
 	}
 
 	@Override
 	public void create() {
-		fireDelay = 3000;
+		fireDelay = 1500;
 
 	}
 
 	@Override
 	public void render(SpriteBatch graphics) {
-		graphics.draw(ResourceManager.getTexture("Tower.png"), x, y, 80, 100);
-
+		graphics.draw(ResourceManager.getTexture("Tower.png"), x, y, 100, 100);
 	}
 
 	long lastShot = 0;
@@ -49,7 +50,7 @@ public class Tower extends WorldObject {
 			angle += 2*Math.PI;
 		}
 
-		Game.getInstance().getWorld().getCurrentRoom().addProjectile(new Projectile(angle, x, y));
+		Game.getInstance().getWorld().getCurrentRoom().addProjectile(new Projectile(this ,angle, x + (int) collisionBox.getWidth()/2, y + (int)collisionBox.getHeight()/2));
 
 		// if (shot == false) {
 		//
@@ -93,6 +94,11 @@ public class Tower extends WorldObject {
 
 	public void setFireDelay(int fireDelay) {
 		this.fireDelay = fireDelay;
+	}
+
+	@Override
+	public WorldObject getReplacementForDead() {
+		return new DestroyedTower(x, y);
 	}
 
 }

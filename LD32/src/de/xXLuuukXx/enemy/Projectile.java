@@ -16,18 +16,19 @@ public class Projectile extends WorldObject {
 	
 	private int size = 32;
 	
+	private Object owner;
 	
-	public Projectile(double direction, int x, int y) {
+	
+	public Projectile(Object owner, double direction, int x, int y) {
 		super(x, y);
 		this.direction = direction;
 		this.speed = 10;
 		
-		x+= 40;
-		y+= 50;
+		this.owner = owner;
 		
 		position = new Vector2(x, y);
 		
-		ResourceManager.playSoundEffect("schuss.wav");
+		ResourceManager.playSoundEffect("schuss.wav", 0.2f);
 		
 	}
 
@@ -67,14 +68,22 @@ public class Projectile extends WorldObject {
 	}
 
 	public boolean hit(Rectangle r2) {
-		Rectangle r = new Rectangle(x - size/2, y - size/2, size, size);
+		Rectangle r = new Rectangle(x, y, size, size);
 		boolean b = r2.overlaps(r);
 		if(b) {
 			return true;
 		}
 		return false;
 	}
-
+	
+	public Object getOwner() {
+		return owner;
+	}
+	
+	public void setOwner(ProjectileOwner owner) {
+		this.owner = owner;
+	}
+	
 	@Override
 	public void create() {
 		// TODO Auto-generated method stub

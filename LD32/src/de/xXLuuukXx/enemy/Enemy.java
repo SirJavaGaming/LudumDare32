@@ -1,13 +1,15 @@
 package de.xXLuuukXx.enemy;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Rectangle;
 
+import de.sirjavagaming.worldobjects.CollidableWorldObject;
 import de.sirjavagaming.worldobjects.WorldObject;
 
-public abstract class Enemy extends WorldObject {
+public abstract class Enemy extends CollidableWorldObject {
 	
-	public Enemy(int x, int y) {
-		super(x, y);
+	public Enemy(Rectangle collisionBox, int x, int y) {
+		super(collisionBox, x, y);
 	}
 	
 	protected int lifes;
@@ -24,7 +26,7 @@ public abstract class Enemy extends WorldObject {
 		lifes -= damage;
 	}
 	
-
+	public abstract WorldObject getReplacementForDead();
 	public abstract void render(SpriteBatch graphics);
 	public abstract void update();
 	public abstract void create();
