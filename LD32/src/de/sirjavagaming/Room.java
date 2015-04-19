@@ -12,13 +12,12 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 
 import de.sirjavagaming.worldobjects.CollidableWorldObject;
-import de.sirjavagaming.worldobjects.DemoCollider;
+import de.sirjavagaming.worldobjects.InvisBorder;
 import de.sirjavagaming.worldobjects.WorldObject;
 import de.team.Game;
 import de.xXLuuukXx.Player;
 import de.xXLuuukXx.enemy.Enemy;
 import de.xXLuuukXx.enemy.Projectile;
-import de.xXLuuukXx.enemy.ProjectileOwner;
 import de.xXLuuukXx.enemy.Tower;
 
 public class Room {
@@ -43,7 +42,10 @@ public class Room {
 	
 	public void create() {		
 		worldObjects = new ArrayList<WorldObject>();
-		addWorldObject(new DemoCollider(100, 100));
+		addWorldObject(new InvisBorder(new Rectangle(0, 0, 1280, 100)));
+		addWorldObject(new InvisBorder(new Rectangle(0, 0, 120, 900)));
+		addWorldObject(new InvisBorder(new Rectangle(1280-80, 100, 100, 900)));
+		addWorldObject(new InvisBorder(new Rectangle(0, 900-60-180, 1280, 100)));
 		
 		Random rand = new Random();
 		int x = rand.nextInt(4)+1;
@@ -143,12 +145,15 @@ public class Room {
 
 		List<WorldObject> removeo = new ArrayList<WorldObject>();
 		List<WorldObject> toAdd = new ArrayList<WorldObject>();
+		doorsOpen = true;
 		for(WorldObject object : worldObjects) {
 			if(object instanceof Enemy) {
 				Enemy e = ((Enemy)object);
 				if(e.getLifes() == 0) {
 					removeo.add(e);
 					toAdd.add(e.getReplacementForDead());
+				} else {
+					doorsOpen = false;
 				}
 			}
 			object.update();

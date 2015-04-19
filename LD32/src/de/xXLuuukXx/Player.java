@@ -10,7 +10,6 @@ import de.sirjavagaming.ResourceManager;
 import de.team.Game;
 import de.team.GameInterface;
 import de.xXLuuukXx.enemy.Projectile;
-import de.xXLuuukXx.enemy.ProjectileOwner;
 
 public class Player {
 
@@ -26,7 +25,7 @@ public class Player {
 	private int fireDelay = 200;
 
 	public void create() {
-		this.collisionBox = new Rectangle(0, 0, 100, 40);
+		this.collisionBox = new Rectangle(0, 20, 50, 70);
 		this.instance = Game.getInstance();
 		this.lifes = 10;
 		current = Direction.DOWN;
@@ -36,8 +35,11 @@ public class Player {
 	}
 
 	public void render() {
-
+		
 		SpriteBatch graphics = instance.getGraphics();
+		
+//		graphics.draw(ResourceManager.getTexture("black.png"), getCollisionBox().x, getCollisionBox().y, getCollisionBox().width, getCollisionBox().height);
+		
 		boolean b = (System.currentTimeMillis() % 200) < 100; 
 		if(moving) {
 			switch (current) {
@@ -141,7 +143,7 @@ public class Player {
 	}
 
 	public Rectangle getCollisionBox() {
-		return new Rectangle(x + collisionBox.getX(), y + collisionBox.getY(), collisionBox.getWidth() - collisionBox.getX(), collisionBox.getHeight() - collisionBox.getY());
+		return new Rectangle(x + collisionBox.getX(), y + collisionBox.getY(), collisionBox.getWidth() + collisionBox.getX(), collisionBox.getHeight() + collisionBox.getY());
 	}
 
 	public int getX() {

@@ -6,12 +6,13 @@ import com.badlogic.gdx.math.Rectangle;
 public class InvisBorder extends CollidableWorldObject{
 
 	public InvisBorder(Rectangle border) {
-		super(new Rectangle(border.x, border.y, border.width, border.height), (int)border.x, (int)border.y);
+		super(new Rectangle(border.x, border.y, border.width, border.height), 0, 0);
 	}
 
 	@Override
 	public void render(SpriteBatch graphics) {
-		// TODO Auto-generated method stub
+//		graphics.draw(de.sirjavagaming.ResourceManager.getTexture("black.png"), getCollisionBox().x, getCollisionBox().y, getCollisionBox().width, getCollisionBox().height);
+	
 		
 	}
 
