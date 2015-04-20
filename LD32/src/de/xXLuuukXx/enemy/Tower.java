@@ -1,11 +1,14 @@
 package de.xXLuuukXx.enemy;
 
+import java.util.Random;
+
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 
 import de.sirjavagaming.ResourceManager;
 import de.sirjavagaming.worldobjects.WorldObject;
 import de.team.Game;
+import de.team.GameState;
 import de.xXLuuukXx.Player;
 
 public class Tower extends Enemy {
@@ -14,31 +17,35 @@ public class Tower extends Enemy {
 
 	public Tower(int x, int y) {
 		super(new Rectangle(0, 0, 100, 100), x, y);
-		lifes = 10;
 	}
 
 	@Override
 	public void create() {
-		fireDelay = 1500;
-
+		double localDiff = Game.getInstance().getWorld().getCurrentRoom().getDifficulty();
+		lifes = (int) (localDiff + 5);
+		fireDelay = (int) (4000 - (2500 * (localDiff / 10)));
+		System.out.println(fireDelay);
 	}
 
 	@Override
 	public void render(SpriteBatch graphics) {
 		graphics.draw(ResourceManager.getTexture("Tower.png"), x, y, 100, 100);
+		graphics.draw(ResourceManager.getTexture("black.png"), x, y, 100, 100);
 	}
 
 	long lastShot = 0;
 
 	@Override
 	public void update() {
+		if(Game.getInstance().getGameState() == GameState.DEAD) return;
 		if (lastShot != 0) {
 			if (lastShot + fireDelay < System.currentTimeMillis()) {
 				lastShot = System.currentTimeMillis();
 				shoot();
 			}
 		} else {
-			lastShot = System.currentTimeMillis();
+			Random r = new Random();
+			lastShot = System.currentTimeMillis() - r.nextInt(fireDelay) + 1500;
 		}
 	}
 

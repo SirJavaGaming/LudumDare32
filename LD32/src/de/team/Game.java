@@ -7,7 +7,7 @@ public class Game {
 	
 	public static final int WIDTH = 1280;
 	public static final int HEIGHT = 900;
-	public static final String TITLE = "Name fehlt noch";
+	public static final String TITLE = "MatitaShoot";
 	
 	private static GameInterface instance;
 	

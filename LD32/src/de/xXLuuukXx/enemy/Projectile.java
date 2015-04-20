@@ -1,5 +1,6 @@
 package de.xXLuuukXx.enemy;
 
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
@@ -34,7 +35,13 @@ public class Projectile extends WorldObject {
 
 	@Override
 	public void render(SpriteBatch graphics) {
-		graphics.draw(ResourceManager.getTexture("Kugel.png"), x - size/2, y - size/2, size, size);
+		Sprite s = new Sprite(ResourceManager.getTexture("Matita.png"));
+		s.setX(x - size / 2);
+		s.setY(y - size / 2);
+		s.setSize(size, size);
+		s.setOrigin((float)(size/2), (float)(size/2));
+		s.rotate((float) Math.toDegrees(direction) - 90f);
+		s.draw(graphics);
 		
 	}
 

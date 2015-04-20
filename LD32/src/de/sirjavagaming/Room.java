@@ -42,10 +42,10 @@ public class Room {
 	
 	public void create() {		
 		worldObjects = new ArrayList<WorldObject>();
-		addWorldObject(new InvisBorder(new Rectangle(0, 0, 1280, 100)));
-		addWorldObject(new InvisBorder(new Rectangle(0, 0, 120, 900)));
-		addWorldObject(new InvisBorder(new Rectangle(1280-80, 100, 100, 900)));
-		addWorldObject(new InvisBorder(new Rectangle(0, 900-60-180, 1280, 100)));
+		addWorldObject(new InvisBorder(new Rectangle(0, 0, 1280, 60))); //Down-Border
+		addWorldObject(new InvisBorder(new Rectangle(0, 0, 100, 900))); //Left-Border
+		addWorldObject(new InvisBorder(new Rectangle(1280-90, 100, 100, 900))); //Right-Border
+		addWorldObject(new InvisBorder(new Rectangle(0, 900-20-180, 1280, 100))); //Top-Border
 		
 		Random rand = new Random();
 		int x = rand.nextInt(4)+1;
@@ -122,7 +122,7 @@ public class Room {
 	}
 	
 	boolean b = false;
-	public void update() {
+	public void update() {		
 		if(Keyboard.isKeyDown(Keyboard.KEY_I)) {
 			if(!b)
 			doorsOpen=!doorsOpen;
@@ -134,14 +134,14 @@ public class Room {
 	
 	public void render() {
 		SpriteBatch graphics = Game.getInstance().getGraphics();
-		graphics.draw(new TextureRegion(ResourceManager.getTexture("room/defaultroom.png"), Game.WIDTH, Game.HEIGHT),0, 0);
+		graphics.draw(new TextureRegion(ResourceManager.getTexture("room/defaultroom3.png"), Game.WIDTH, Game.HEIGHT), 0 - 15 , 0, Game.WIDTH + 15, Game.HEIGHT);
 		
 		String s = doorsOpen ? "door_open" : "door_closed";
 		
-		if(TOP_DOOR) graphics.draw(ResourceManager.getTexture("room/" + s + ".png"), 512, 464, 256, 256);
-		if(LEFT_DOOR) graphics.draw(ResourceManager.getTexture("room/" + s + "_rot.png"), 0, 232, 256, 256);
-		if(BOTTOM_DOOR) graphics.draw(ResourceManager.getTexture("room/" + s + ".png"), 512, 256, 256, -256);
-		if(RIGHT_DOOR) graphics.draw(ResourceManager.getTexture("room/" + s + "_rot.png"), 1280, 232, -256, 256);
+		if(TOP_DOOR) graphics.draw(ResourceManager.getTexture("room/" + s + ".png"), 560, 622, 256, 100);
+		if(LEFT_DOOR) graphics.draw(ResourceManager.getTexture("room/" + s + "_rot.png"), 0, 190, 171, 230);
+		if(BOTTOM_DOOR) graphics.draw(ResourceManager.getTexture("room/" + s + ".png"), 560, 99, 256, -99);
+		if(RIGHT_DOOR) graphics.draw(ResourceManager.getTexture("room/" + s + "_rot.png"), 1280, 190, -156, 230);
 
 		List<WorldObject> removeo = new ArrayList<WorldObject>();
 		List<WorldObject> toAdd = new ArrayList<WorldObject>();
@@ -149,7 +149,7 @@ public class Room {
 		for(WorldObject object : worldObjects) {
 			if(object instanceof Enemy) {
 				Enemy e = ((Enemy)object);
-				if(e.getLifes() == 0) {
+				if(e.getLifes() <= 0) {
 					removeo.add(e);
 					toAdd.add(e.getReplacementForDead());
 				} else {
@@ -319,6 +319,9 @@ public class Room {
 		return y;
 	}
 	
+	public boolean isDoorsOpen() {
+		return doorsOpen;
+	}
 	
 	private void calcDoors() {
 		Random rand = new Random();
@@ -363,10 +366,10 @@ public class Room {
 			}
 		}
 	}
-	private boolean TOP_DOOR;
-	private boolean RIGHT_DOOR;
-	private boolean BOTTOM_DOOR;
-	private boolean LEFT_DOOR;
+	boolean TOP_DOOR;
+	boolean RIGHT_DOOR;
+	boolean BOTTOM_DOOR;
+	boolean LEFT_DOOR;
 
 	public void addProjectile(Projectile projectile) {
 		projectiles.add(projectile);

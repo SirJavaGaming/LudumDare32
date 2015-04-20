@@ -9,6 +9,7 @@ import de.sirjavagaming.Direction;
 import de.sirjavagaming.ResourceManager;
 import de.team.Game;
 import de.team.GameInterface;
+import de.team.GameState;
 import de.xXLuuukXx.enemy.Projectile;
 
 public class Player {
@@ -25,72 +26,93 @@ public class Player {
 	private int fireDelay = 200;
 
 	public void create() {
-		this.collisionBox = new Rectangle(0, 20, 50, 70);
+		this.collisionBox = new Rectangle(25, 10, 25, 70);
 		this.instance = Game.getInstance();
 		this.lifes = 10;
 		current = Direction.DOWN;
-		x = 500;
-		y = 500;
+		x = Game.WIDTH / 2 - 13;
+		y = 720 / 2 - 30;
 
 	}
 
 	public void render() {
-		
 		SpriteBatch graphics = instance.getGraphics();
-		
-//		graphics.draw(ResourceManager.getTexture("black.png"), getCollisionBox().x, getCollisionBox().y, getCollisionBox().width, getCollisionBox().height);
-		
-		boolean b = (System.currentTimeMillis() % 200) < 100; 
-		if(moving) {
+
+		// graphics.draw(ResourceManager.getTexture("black.png"), getCollisionBox().x, getCollisionBox().y, getCollisionBox().width, getCollisionBox().height);
+
+		boolean b = (System.currentTimeMillis() % 200) < 100;
+		if (moving) {
 			switch (current) {
 			case DOWN:
-				if(b)
-					graphics.draw(ResourceManager.getTexture("player/p_f_1.png"), x, y, 100, 100);
+				if (b)
+					graphics.draw(
+							ResourceManager.getTexture("player/p_f_1.png"), x,
+							y, 100, 100);
 				else
-					graphics.draw(ResourceManager.getTexture("player/p_f_2.png"), x, y, 100, 100);
+					graphics.draw(
+							ResourceManager.getTexture("player/p_f_2.png"), x,
+							y, 100, 100);
 				break;
 			case LEFT:
-				if(b)
-					graphics.draw(ResourceManager.getTexture("player/p_l_1.png"), x, y, 100, 100);
+				if (b)
+					graphics.draw(
+							ResourceManager.getTexture("player/p_l_1.png"), x,
+							y, 100, 100);
 				else
-					graphics.draw(ResourceManager.getTexture("player/p_l_2.png"), x, y, 100, 100);
+					graphics.draw(
+							ResourceManager.getTexture("player/p_l_2.png"), x,
+							y, 100, 100);
 				break;
 			case RIGHT:
-				if(b)
-					graphics.draw(ResourceManager.getTexture("player/p_r_1.png"), x, y, 100, 100);
+				if (b)
+					graphics.draw(
+							ResourceManager.getTexture("player/p_r_1.png"), x,
+							y, 100, 100);
 				else
-					graphics.draw(ResourceManager.getTexture("player/p_r_2.png"), x, y, 100, 100);
+					graphics.draw(
+							ResourceManager.getTexture("player/p_r_2.png"), x,
+							y, 100, 100);
 				break;
 			case UP:
-				if(b)
-					graphics.draw(ResourceManager.getTexture("player/p_b_1.png"), x, y, 100, 100);
+				if (b)
+					graphics.draw(
+							ResourceManager.getTexture("player/p_b_1.png"), x,
+							y, 100, 100);
 				else
-					graphics.draw(ResourceManager.getTexture("player/p_b_2.png"), x, y, 100, 100);
+					graphics.draw(
+							ResourceManager.getTexture("player/p_b_2.png"), x,
+							y, 100, 100);
 				break;
 			}
 		} else {
 			switch (current) {
 			case DOWN:
-				graphics.draw(ResourceManager.getTexture("player/p_f.png"), x, y, 100, 100);
+				graphics.draw(ResourceManager.getTexture("player/p_f.png"), x,
+						y, 100, 100);
 				break;
 			case LEFT:
-				graphics.draw(ResourceManager.getTexture("player/p_l.png"), x, y, 100, 100);
+				graphics.draw(ResourceManager.getTexture("player/p_l.png"), x,
+						y, 100, 100);
 				break;
 			case RIGHT:
-				graphics.draw(ResourceManager.getTexture("player/p_r.png"), x, y, 100, 100);
+				graphics.draw(ResourceManager.getTexture("player/p_r.png"), x,
+						y, 100, 100);
 				break;
 			case UP:
-				graphics.draw(ResourceManager.getTexture("player/p_b.png"), x, y, 100, 100);
+				graphics.draw(ResourceManager.getTexture("player/p_b.png"), x,
+						y, 100, 100);
 				break;
 			}
 		}
-		
 
 	}
-	
-	
+
 	private long lastShot = 0;
+
 	public void update() {
+		if(lifes <= 0) {
+			Game.getInstance().setGameState(GameState.DEAD);
+		}
 		moving = false;
 		if (Keyboard.isKeyDown(Keyboard.KEY_W)) {
 			y += instance.getWorld().getCurrentRoom()
@@ -119,31 +141,61 @@ public class Player {
 			current = Direction.RIGHT;
 			moving = true;
 		}
-		
-		if(lastShot + fireDelay < System.currentTimeMillis() || sharpShooting) {
-			if(Keyboard.isKeyDown(Keyboard.KEY_DOWN)) {
-				instance.getWorld().getCurrentRoom().addProjectile(new Projectile(this, Math.toRadians(270), x+(int)collisionBox.getWidth()/2, y+(int)collisionBox.getHeight()/2));
+
+		if (lastShot + fireDelay < System.currentTimeMillis() || sharpShooting) {
+			if (Keyboard.isKeyDown(Keyboard.KEY_DOWN)) {
+				instance.getWorld()
+						.getCurrentRoom()
+						.addProjectile(
+								new Projectile(this, Math.toRadians(270), x
+										+ (int) collisionBox.getX()
+										+ (int) collisionBox.getWidth() / 2, y
+										+ (int) collisionBox.getY()
+										+ (int) collisionBox.getHeight() / 2));
 				lastShot = System.currentTimeMillis();
-			} else if(Keyboard.isKeyDown(Keyboard.KEY_UP)) {
-				instance.getWorld().getCurrentRoom().addProjectile(new Projectile(this, Math.toRadians(90), x+(int)collisionBox.getWidth()/2, y+(int)collisionBox.getHeight()/2));
+			} else if (Keyboard.isKeyDown(Keyboard.KEY_UP)) {
+				instance.getWorld()
+						.getCurrentRoom()
+						.addProjectile(
+								new Projectile(this, Math.toRadians(90), x
+										+ (int) collisionBox.getX()
+										+ (int) collisionBox.getWidth() / 2, y
+										+ (int) collisionBox.getY()
+										+ (int) collisionBox.getHeight() / 2));
 				lastShot = System.currentTimeMillis();
-			} else if(Keyboard.isKeyDown(Keyboard.KEY_LEFT)) {
-				instance.getWorld().getCurrentRoom().addProjectile(new Projectile(this, Math.toRadians(180), x+(int)collisionBox.getWidth()/2, y+(int)collisionBox.getHeight()/2));
+			} else if (Keyboard.isKeyDown(Keyboard.KEY_LEFT)) {
+				instance.getWorld()
+						.getCurrentRoom()
+						.addProjectile(
+								new Projectile(this, Math.toRadians(180), x
+										+ (int) collisionBox.getX()
+										+ (int) collisionBox.getWidth() / 2, y
+										+ (int) collisionBox.getY()
+										+ (int) collisionBox.getHeight() / 2));
 				lastShot = System.currentTimeMillis();
-			} else if(Keyboard.isKeyDown(Keyboard.KEY_RIGHT)) {
-				instance.getWorld().getCurrentRoom().addProjectile(new Projectile(this, Math.toRadians(0), x+(int)collisionBox.getWidth()/2, y+(int)collisionBox.getHeight()/2));
+			} else if (Keyboard.isKeyDown(Keyboard.KEY_RIGHT)) {
+				instance.getWorld()
+						.getCurrentRoom()
+						.addProjectile(
+								new Projectile(this, Math.toRadians(0), x
+										+ (int) collisionBox.getX()
+										+ (int) collisionBox.getWidth() / 2, y
+										+ (int) collisionBox.getY()
+										+ (int) collisionBox.getHeight() / 2));
 				lastShot = System.currentTimeMillis();
 			}
 		}
 
 	}
-	
+
 	public int getMovementspeed() {
 		return movementspeed;
 	}
 
 	public Rectangle getCollisionBox() {
-		return new Rectangle(x + collisionBox.getX(), y + collisionBox.getY(), collisionBox.getWidth() + collisionBox.getX(), collisionBox.getHeight() + collisionBox.getY());
+		return new Rectangle(x + collisionBox.getX(), y + collisionBox.getY(),
+				collisionBox.getWidth() + collisionBox.getX(),
+				collisionBox.getHeight() + collisionBox.getY());
 	}
 
 	public int getX() {
@@ -165,15 +217,15 @@ public class Player {
 	public void setMovementspeed(int movementspeed) {
 		this.movementspeed = movementspeed;
 	}
-	
+
 	public int getLifes() {
 		return lifes;
 	}
-	
+
 	public void setLifes(int lifes) {
 		this.lifes = lifes;
 	}
-	
+
 	public void damage(int lifes) {
 		this.lifes -= lifes;
 	}
