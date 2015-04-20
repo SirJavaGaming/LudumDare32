@@ -30,7 +30,6 @@ public class Tower extends Enemy {
 	@Override
 	public void render(SpriteBatch graphics) {
 		graphics.draw(ResourceManager.getTexture("Tower.png"), x, y, 100, 100);
-		graphics.draw(ResourceManager.getTexture("black.png"), x, y, 100, 100);
 	}
 
 	long lastShot = 0;
